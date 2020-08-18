@@ -1,0 +1,65 @@
+$background: #F2F7F9;
+$degraded-color: linear-gradient(90deg,$primary 0,$secondary);
+$box_1: 0px 0px 4px #00000029;
+
+html, body {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: $background;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: $secondary white;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    //box-shadow: inset 0 0 5px black;
+    background-color: $background;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $secondary;
+    &:hover {
+      background: $secondary; 
+    }
+  }
+}
+
+.bg_degraded {
+  background: $degraded-color;
+}
+
+
+// box-shadow
+.box_shadow_1{
+  box-shadow: $box_1;
+}
+
+#tab_tarif.b-table .table {
+  border-bottom: 1px solid $border;
+}
+
+.no-border-radius{
+  border-radius: 0;
+}
+
+p.help {
+  display: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.is-divider {
+  border: 1px solid $grey-dark;
+}

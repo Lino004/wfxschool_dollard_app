@@ -1,0 +1,16 @@
+$primary: #1e70b4;
+$secondary: #274688;
+$success: #49DB70;
+$warning: #F89E37;
+$danger: #E43A45;
+
+$transparent: transparent;
+
+$addColors: (
+  "primary": ($primary, $white),
+  "secondary": ($secondary, $white),
+  "warning": ($warning, $white),
+  "danger": ($danger, $white),
+  "transparent": ($transparent, $black),
+);
+
