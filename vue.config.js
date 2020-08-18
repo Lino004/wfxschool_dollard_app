@@ -3,7 +3,6 @@ module.exports = {
     name: 'WFX - Dollar',
     themeColor: '#1e70b4',
     appleMobileWebAppCapable: 'yes',
-    workboxPluginMode: 'InjectManifest',
     manifestOptions: {
       short_name: 'WFX - Dollar',
       description: 'Service de vente de dollar de WfxSchool',
