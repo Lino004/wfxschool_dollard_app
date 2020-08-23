@@ -7,10 +7,12 @@
             column flex-1 is-full-height has-background-white
             px-6 form_vente is-5 is-4-desktop box_shadow_1"
           v-show="!showOneColumn || show">
-          <Infos :tranche-offres="trancheOffres"/>
+          <Infos :tranche-offres="trancheOffres"
+                :tranche-offres-bitcoin="trancheOffresBitcoin"/>
         </div>
         <div class="column flex-1 px-6 form_vente" v-show="!showOneColumn || !show">
-          <Form :tranche-offres="trancheOffres"/>
+          <Form :tranche-offres="trancheOffres"
+                :tranche-offres-bitcoin="trancheOffresBitcoin"/>
         </div>
       </div>
     </section>
@@ -69,6 +71,10 @@ export default {
       trancheOffres: [
         { trancheInferieur: 50, trancheSuperieur: 0, prix: 620 },
         { trancheInferieur: 1000, trancheSuperieur: 0, prix: 610 }
+      ],
+      trancheOffresBitcoin: [
+        { trancheInferieur: 50, trancheSuperieur: 0, prix: 610 },
+        { trancheInferieur: 1000, trancheSuperieur: 0, prix: 600 }
       ]
     }
   },

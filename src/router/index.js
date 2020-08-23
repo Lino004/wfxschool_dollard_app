@@ -6,6 +6,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '*',
+    redirect: '/error-page'
+  },
+  {
     path: '/',
     name: 'Home',
     redirect: '/login',
@@ -41,6 +45,11 @@ const routes = [
     name: 'VenteDollar',
     component: () => import('../views/VenteDollar.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/error-page',
+    name: 'Error',
+    component: () => import('../views/Error.vue')
   }
 ]
 
