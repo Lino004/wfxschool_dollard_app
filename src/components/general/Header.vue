@@ -1,6 +1,6 @@
 <template>
   <b-navbar
-    :is-active="true"
+    :active="true"
     :mobile-burger="false"
     :close-on-click="false"
     id="header_app">

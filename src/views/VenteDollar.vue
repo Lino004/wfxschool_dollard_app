@@ -19,7 +19,7 @@
     <div class="is-invisible-tablet page-vente_footer">
       <b-navbar
         fixed-bottom
-        :is-active="true"
+        :active="true"
         :mobile-burger="false"
         :close-on-click="false">
         <template slot="start">

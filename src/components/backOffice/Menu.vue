@@ -17,9 +17,9 @@
         :key="i"
         :icon-left="item.icon"
         size="is-medium"
-        tag="router-link"
+        tag="a"
         :class="$route.name === item.to ? 'is-active' : ''"
-        :to="{ name: item.to }">
+        @click="goTo(item.to)">
         <span class="is-size-5">
           {{item.title}}
         </span>
@@ -65,6 +65,11 @@ export default {
       ]
     }
   },
-  computed: {}
+  methods: {
+    goTo (to) {
+      this.$emit('isclick')
+      if (this.$route.name !== to) this.$router.push({ name: to })
+    }
+  }
 }
 </script>

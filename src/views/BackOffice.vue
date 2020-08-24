@@ -7,7 +7,7 @@
             column flex-1 is-full-height has-background-white
             px-6 form_vente is-5 is-4-desktop box_shadow_1"
           v-show="!showOneColumn || show">
-          <Menu/>
+          <Menu @isclick="show = false"/>
         </div>
         <div class="column flex-1 px-6 form_vente" v-show="!showOneColumn || !show">
           <div class="container">
@@ -26,7 +26,7 @@
     <div class="is-invisible-tablet page-vente_footer">
       <b-navbar
         fixed-bottom
-        :is-active="true"
+        :active="true"
         :mobile-burger="false"
         :close-on-click="false">
         <template slot="start">
@@ -37,7 +37,7 @@
                 expanded
                 class="is-height-52 no-border-radius">
                 <span class="has-text-weight-bold">
-                  Offre
+                  Menu
                 </span>
               </b-button>
             </div>
@@ -48,7 +48,7 @@
                 class="is-height-52 no-border-radius"
                 type="is-primary">
                 <span class="has-text-weight-bold">
-                  Formulaire
+                  Page
                 </span>
               </b-button>
             </div>
@@ -100,7 +100,9 @@ export default {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   },
-  mounted () {},
+  mounted () {
+    this.show = false
+  },
   destroyed () {
     window.removeEventListener('resize', this.handleResize)
   }
