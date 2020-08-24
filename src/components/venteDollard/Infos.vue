@@ -51,8 +51,9 @@ export default {
         },
         {
           field: 'prix',
-          label: 'Prix',
-          headerClass: 'has-text-primary'
+          label: 'Prix (FCFA)',
+          headerClass: 'has-text-primary',
+          numeric: true
         }
       ]
     }
@@ -63,12 +64,12 @@ export default {
         if (el.trancheSuperieur === 0) {
           return {
             tranche: `À partie de ${el.trancheInferieur}$`,
-            prix: `${el.prix} FCFA`
+            prix: `${el.prix}`
           }
         }
         return {
           tranche: `${el.trancheInferieur}$ - ${el.trancheSuperieur}$`,
-          prix: `${el.prix} FCFA`
+          prix: `${el.prix}`
         }
       })
     },
@@ -77,12 +78,12 @@ export default {
         if (el.trancheSuperieur === 0) {
           return {
             tranche: `À partie de ${el.trancheInferieur}$`,
-            prix: `${el.prix} FCFA`
+            prix: `${el.prix}`
           }
         }
         return {
           tranche: `${el.trancheInferieur}$ - ${el.trancheSuperieur}$`,
-          prix: `${el.prix} FCFA`
+          prix: `${el.prix}`
         }
       })
     }

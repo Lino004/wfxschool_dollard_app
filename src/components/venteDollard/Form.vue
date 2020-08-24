@@ -159,8 +159,14 @@
             </h5>
             <div class="has-text-weight-bold">
               <span class="has-text-weight-normal is-size-7">Adresse email:</span> {{getUser.email}} <br>
-              <span class="has-text-weight-normal is-size-7" v-if="champs.adressepm">Adresse perfect money:</span> {{champs.adressepm}}
-              <span class="has-text-weight-normal is-size-7"  v-if="champs.adressebitcoin">Adresse bitcoin:</span> {{champs.adressebitcoin}}
+              <span
+                class="has-text-weight-normal is-size-7"
+                v-if="champs.adressepm && typeAchat === 1">
+                Adresse perfect money:</span> U{{champs.adressepm}}
+              <span
+                class="has-text-weight-normal is-size-7"
+                v-if="champs.adressebitcoin && typeAchat === 2">
+                Adresse bitcoin:</span> {{champs.adressebitcoin}}
               <br>
               <span class="has-text-weight-normal is-size-7">Numéro:</span> {{`+${indicatif} ${champs.phone}`}} <br>
             </div>
@@ -172,7 +178,8 @@
           id="tab_tarif"
           :data="data"
           :columns="columns"
-          header-class="has-text-white"></b-table>
+          header-class="has-text-white">
+        </b-table>
       </section>
       <b-button
         type="is-primary"
@@ -185,7 +192,7 @@
           Suivant
         </span>
       </b-button>
-      <p> <span class="has-text-danger is-size-6 has-text-weight-bold"> * </span> : Champs obligatoire</p>
+      <p v-if="show"> <span class="has-text-danger is-size-6 has-text-weight-bold"> * </span> : Champs obligatoire</p>
       <div class="buttons flex-1" v-if="!show">
         <b-button
           type="is-primary"
@@ -339,17 +346,17 @@ export default {
         isValid = false
         this.champs.errphone = true
       }
-      if (this.champs.adressepm && this.champs.adressepm.length === 0) {
+      if (this.typeAchat === 1 && this.champs.adressepm.toString().length === 0) {
         this.msgs.push('<b>L\'adresse Perfect Money</b> est obligatoire')
         isValid = false
         this.champs.erradressepm = true
       }
-      if (this.champs.adressepm && this.champs.adressepm.length < 8) {
+      if (this.typeAchat === 1 && this.champs.adressepm.toString().length !== 8) {
         this.msgs.push('<b>L\'adresse Perfect Money</b> doit contenir 8 chiffres')
         isValid = false
         this.champs.erradressepm = true
       }
-      if (this.champs.adressebitcoin && this.champs.adressebitcoin.length === 0) {
+      if (this.typeAchat === 2 && this.champs.adressebitcoin.length === 0) {
         this.msgs.push('<b>L\'adresse Bitcoin</b> est obligatoire')
         isValid = false
         this.champs.erradressebitcoin = true

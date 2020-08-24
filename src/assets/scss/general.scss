@@ -108,3 +108,22 @@ input[type=number] {
     0 20px 20px rgba(0,0,0,.15);
     line-height: 1;
 }
+
+a.button.is-primary{
+  &.is-active {
+    border: 1px solid $primary;
+    background-color: transparent;
+    color: $primary;
+  }
+}
+
+.align-center{
+  align-items: center;
+}
+
+/* .logo {
+  &_backoffice {
+    position: absolute;
+    width: 120px;
+  }
+} */
