@@ -8,211 +8,213 @@
       Veuillez vérifier puis remplir les champs suivant:
     </p>
 
-    <div class="box mx_auto">
-      <MsgError :msgs="msgs" v-if="showMsgsError" @close="msgsErrorClose"/>
-      <section class="columns is-multiline is-mobile" v-if="show">
-        <!-- Nom -->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field label="Nom">
-            <b-input
-              placeholder="Votre nom"
-              :value="getUser.nom"
-              disabled/>
-          </b-field>
-        </div>
-        <!-- Prenom -->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field label="Prénom(s)">
-            <b-input
-              placeholder="Votre prenon(s)"
-              :value="getUser.prenom"
-              disabled/>
-          </b-field>
-        </div>
-        <!-- Adresse email -->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field label="Adresse email">
-            <b-input
-              type="email"
-              :value="getUser.email"
-              disabled/>
-          </b-field>
-        </div>
-        <!-- Numéro -->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field>
-            <template slot="label">
-              <p> Numéro <span class="has-text-danger is-size-7"> * </span> </p>
-            </template>
-            <div>
-              <b-field :type="champs.errphone ? 'is-danger' : ''">
-                <p class="control">
-                  <span class="button is-static"> +{{indicatif}} </span>
-                </p>
-                <b-input
-                  placeholder="Ex: 66889955"
-                  type="number"
-                  expanded
-                  v-model.number="champs.phone"/>
-              </b-field>
-            </div>
-          </b-field>
-        </div>
-        <!-- Type achat-->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field label="Type d'achat">
-            <b-select placeholder="Sélectionner votre type d'achat" expanded
-              v-model="typeAchat">
-              <option
-                v-for="option in type"
-                :value="option.id"
-                :key="option.id">
-                {{ option.value }}
-              </option>
-            </b-select>
-          </b-field>
-        </div>
-        <!-- Adresse PM -->
-        <div class="column is-12-mobile is-6-tablet" v-show="typeAchat === 1">
-          <b-field>
-            <template slot="label">
-              <p> Adresse PM <span class="has-text-danger is-size-7"> * </span> </p>
-            </template>
-            <div>
-              <b-field :type="champs.erradressepm ? 'is-danger' : ''">
-                <p class="control">
-                  <span class="button is-static">U</span>
-                </p>
-                <b-input
-                  placeholder="12345678"
-                  type="number"
-                  expanded
-                  v-model.number="champs.adressepm"/>
-              </b-field>
-            </div>
-          </b-field>
-        </div>
-        <!-- Adresse Bitcoin -->
-        <div class="column is-12-mobile is-6-tablet" v-show="typeAchat === 2">
-          <b-field>
-            <template slot="label">
-              <p> Adresse Bitcoin <span class="has-text-danger is-size-7"> * </span> </p>
-            </template>
-            <div>
-              <b-field :type="champs.erradressebitcoin ? 'is-danger' : ''">
-                <b-input
-                  placeholder="Ex: 784ljyybhbsdFfhbk95518184ygfy"
-                  expanded
-                  v-model="champs.adressebitcoin"/>
-              </b-field>
-            </div>
-          </b-field>
-        </div>
-        <!-- Montant achat en $ -->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field>
-            <template slot="label">
-              <p> Montant achat en $ <span class="has-text-danger is-size-7"> * </span> </p>
-            </template>
-            <div>
-              <b-field :type="champs.errmontantAchat ? 'is-danger' : ''">
-                <b-input
-                  placeholder="500"
-                  type="number"
-                  expanded
-                  min="50"
-                  v-model.number="champs.montantAchat"/>
-                <p class="control">
-                  <span class="button is-static">$</span>
-                </p>
-              </b-field>
-            </div>
-          </b-field>
-        </div>
-        <!-- Somme à payer -->
-        <div class="column is-12-mobile is-6-tablet">
-          <b-field label="Somme à payer">
-            <b-button
-              type="is-primary"
-              class="is-static has-background-white has-text-weight-bold"
-              :class="montantPayer.class"
-              expanded>
-              {{montantPayer.value}} FCFA
-            </b-button>
-          </b-field>
-        </div>
-      </section>
-      <section class="" v-else>
-        <h4 class="is-size-4 has-text-weight-bold">Résumé de l'achat</h4>
-        <hr>
-        <div class="media">
-          <div class="media-left is-hidden-mobile">
-            <Avatar
-              :username="`${getUser.nom} ${getUser.prenom}`"
-              :size="100"
-              backgroundColor="#1e70b4"
-              color="white"/>
+    <transition enter-active-class="zoomIn">
+      <div class="box mx_auto" v-if="showAnime1">
+        <MsgError :msgs="msgs" v-if="showMsgsError" @close="msgsErrorClose"/>
+        <section class="columns is-multiline is-mobile" v-if="show">
+          <!-- Nom -->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field label="Nom">
+              <b-input
+                placeholder="Votre nom"
+                :value="getUser.nom"
+                disabled/>
+            </b-field>
           </div>
-          <div class="media-content">
-            <h5 class="is-size-5 has-text-weight-bold has-text-secondary">
-              {{`${getUser.nom} ${getUser.prenom}`}}
-            </h5>
-            <div class="has-text-weight-bold">
-              <span class="has-text-weight-normal is-size-7">Adresse email:</span> {{getUser.email}} <br>
-              <span
-                class="has-text-weight-normal is-size-7"
-                v-if="champs.adressepm && typeAchat === 1">
-                Adresse perfect money:</span> U{{champs.adressepm}}
-              <span
-                class="has-text-weight-normal is-size-7"
-                v-if="champs.adressebitcoin && typeAchat === 2">
-                Adresse bitcoin:</span> {{champs.adressebitcoin}}
-              <br>
-              <span class="has-text-weight-normal is-size-7">Numéro:</span> {{`+${indicatif} ${champs.phone}`}} <br>
+          <!-- Prenom -->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field label="Prénom(s)">
+              <b-input
+                placeholder="Votre prenon(s)"
+                :value="getUser.prenom"
+                disabled/>
+            </b-field>
+          </div>
+          <!-- Adresse email -->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field label="Adresse email">
+              <b-input
+                type="email"
+                :value="getUser.email"
+                disabled/>
+            </b-field>
+          </div>
+          <!-- Numéro -->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field>
+              <template slot="label">
+                <p> Numéro <span class="has-text-danger is-size-7"> * </span> </p>
+              </template>
+              <div>
+                <b-field :type="champs.errphone ? 'is-danger' : ''">
+                  <p class="control">
+                    <span class="button is-static"> +{{indicatif}} </span>
+                  </p>
+                  <b-input
+                    placeholder="Ex: 66889955"
+                    type="number"
+                    expanded
+                    v-model.number="champs.phone"/>
+                </b-field>
+              </div>
+            </b-field>
+          </div>
+          <!-- Type achat-->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field label="Type d'achat">
+              <b-select placeholder="Sélectionner votre type d'achat" expanded
+                v-model="typeAchat">
+                <option
+                  v-for="option in type"
+                  :value="option.id"
+                  :key="option.id">
+                  {{ option.value }}
+                </option>
+              </b-select>
+            </b-field>
+          </div>
+          <!-- Adresse PM -->
+          <div class="column is-12-mobile is-6-tablet" v-show="typeAchat === 1">
+            <b-field>
+              <template slot="label">
+                <p> Adresse PM <span class="has-text-danger is-size-7"> * </span> </p>
+              </template>
+              <div>
+                <b-field :type="champs.erradressepm ? 'is-danger' : ''">
+                  <p class="control">
+                    <span class="button is-static">U</span>
+                  </p>
+                  <b-input
+                    placeholder="12345678"
+                    type="number"
+                    expanded
+                    v-model.number="champs.adressepm"/>
+                </b-field>
+              </div>
+            </b-field>
+          </div>
+          <!-- Adresse Bitcoin -->
+          <div class="column is-12-mobile is-6-tablet" v-show="typeAchat === 2">
+            <b-field>
+              <template slot="label">
+                <p> Adresse Bitcoin <span class="has-text-danger is-size-7"> * </span> </p>
+              </template>
+              <div>
+                <b-field :type="champs.erradressebitcoin ? 'is-danger' : ''">
+                  <b-input
+                    placeholder="Ex: 784ljyybhbsdFfhbk95518184ygfy"
+                    expanded
+                    v-model="champs.adressebitcoin"/>
+                </b-field>
+              </div>
+            </b-field>
+          </div>
+          <!-- Montant achat en $ -->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field>
+              <template slot="label">
+                <p> Montant achat en $ <span class="has-text-danger is-size-7"> * </span> </p>
+              </template>
+              <div>
+                <b-field :type="champs.errmontantAchat ? 'is-danger' : ''">
+                  <b-input
+                    placeholder="500"
+                    type="number"
+                    expanded
+                    min="50"
+                    v-model.number="champs.montantAchat"/>
+                  <p class="control">
+                    <span class="button is-static">$</span>
+                  </p>
+                </b-field>
+              </div>
+            </b-field>
+          </div>
+          <!-- Somme à payer -->
+          <div class="column is-12-mobile is-6-tablet">
+            <b-field label="Somme à payer">
+              <b-button
+                type="is-primary"
+                class="is-static has-background-white has-text-weight-bold"
+                :class="montantPayer.class"
+                expanded>
+                {{montantPayer.value}} FCFA
+              </b-button>
+            </b-field>
+          </div>
+        </section>
+        <section class="" v-else>
+          <h4 class="is-size-4 has-text-weight-bold">Résumé de l'achat</h4>
+          <hr>
+          <div class="media">
+            <div class="media-left is-hidden-mobile">
+              <Avatar
+                :username="`${getUser.nom} ${getUser.prenom}`"
+                :size="100"
+                backgroundColor="#1e70b4"
+                color="white"/>
+            </div>
+            <div class="media-content">
+              <h5 class="is-size-5 has-text-weight-bold has-text-secondary">
+                {{`${getUser.nom} ${getUser.prenom}`}}
+              </h5>
+              <div class="has-text-weight-bold">
+                <span class="has-text-weight-normal is-size-7">Adresse email:</span> {{getUser.email}} <br>
+                <span
+                  class="has-text-weight-normal is-size-7"
+                  v-if="champs.adressepm && typeAchat === 1">
+                  Adresse perfect money:</span> U{{champs.adressepm}}
+                <span
+                  class="has-text-weight-normal is-size-7"
+                  v-if="champs.adressebitcoin && typeAchat === 2">
+                  Adresse bitcoin:</span> {{champs.adressebitcoin}}
+                <br>
+                <span class="has-text-weight-normal is-size-7">Numéro:</span> {{`+${indicatif} ${champs.phone}`}} <br>
+              </div>
             </div>
           </div>
-        </div>
-        <hr>
+          <hr>
 
-        <b-table
-          id="tab_tarif"
-          :data="data"
-          :columns="columns"
-          header-class="has-text-white">
-        </b-table>
-      </section>
-      <b-button
-        type="is-primary"
-        expanded
-        class="my-5"
-        v-if="show"
-        @click="next"
-        icon-right="arrow-right-box">
-        <span class="has-text-weight-bold">
-          Suivant
-        </span>
-      </b-button>
-      <p v-if="show"> <span class="has-text-danger is-size-6 has-text-weight-bold"> * </span> : Champs obligatoire</p>
-      <div class="buttons flex-1" v-if="!show">
+          <b-table
+            id="tab_tarif"
+            :data="data"
+            :columns="columns"
+            header-class="has-text-white">
+          </b-table>
+        </section>
         <b-button
           type="is-primary"
-          class="my-5 flex-1"
-          @click="show = !show"
-          icon-left="arrow-left-box">
-          <span class="has-text-weight-bold is-hidden-mobile">
-            Précèdent
-          </span>
-        </b-button>
-        <b-button
-          type="is-primary"
-          class="my-5 flex-1"
-          @click="$buefy.toast.open('En cours développement ...')">
+          expanded
+          class="my-5"
+          v-if="show"
+          @click="next"
+          icon-right="arrow-right-box">
           <span class="has-text-weight-bold">
-            Confirmer l'achat
+            Suivant
           </span>
         </b-button>
+        <p v-if="show"> <span class="has-text-danger is-size-6 has-text-weight-bold"> * </span> : Champs obligatoire</p>
+        <div class="buttons flex-1" v-if="!show">
+          <b-button
+            type="is-primary"
+            class="my-5 flex-1"
+            @click="show = !show"
+            icon-left="arrow-left-box">
+            <span class="has-text-weight-bold is-hidden-mobile">
+              Précèdent
+            </span>
+          </b-button>
+          <b-button
+            type="is-primary"
+            class="my-5 flex-1"
+            @click="$buefy.toast.open('En cours développement ...')">
+            <span class="has-text-weight-bold">
+              Confirmer l'achat
+            </span>
+          </b-button>
+        </div>
       </div>
-    </div>
+    </transition>
 
     <div class="py-3"></div>
   </div>
@@ -285,7 +287,8 @@ export default {
         value: 'Bitcoin'
       }
     ],
-    typeAchat: 1
+    typeAchat: 1,
+    showAnime1: false
   }),
   computed: {
     ...mapState({
@@ -377,6 +380,10 @@ export default {
     this.listPays = getListePays()
     this.indicatif = this.listPays.find(el => el.id === this.getUser.pays).indicatif
     this.champs.phone = this.getUser.phone
+    const self = this
+    setTimeout(function () {
+      self.showAnime1 = true
+    }, 500)
   }
 }
 </script>

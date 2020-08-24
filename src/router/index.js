@@ -48,7 +48,6 @@ const routes = [
   },
   {
     path: '/back-office',
-    name: 'BackOffice',
     component: () => import('../views/BackOffice.vue'),
     meta: { requiresAuth: true },
     children: [

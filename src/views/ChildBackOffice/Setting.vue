@@ -20,9 +20,7 @@ export default {
   components: {
     Views
   },
-  data: () => ({
-    show: true
-  }),
+  data: () => ({}),
   computed: {
     ...mapState({
       getUser: 'user'

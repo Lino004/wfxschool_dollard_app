@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import Buefy from 'buefy'
 import './assets/scss/app.scss'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
 Vue.use(Buefy)
 

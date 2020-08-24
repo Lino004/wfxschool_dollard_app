@@ -1,32 +1,51 @@
 <template>
   <div class="container">
     <Header/>
-    <figure class="pb-5">
-      <img
-      src="@/assets/imgs/logo_blue.png"
-      class="image is-width-160 mx_auto"/>
-    </figure>
+    <transition enter-active-class="slideInLeft">
+      <figure class="pb-5" v-if="showAnime1">
+        <img
+        src="@/assets/imgs/logo_blue.png"
+        class="image is-width-160 mx_auto"/>
+      </figure>
+    </transition>
 
-    <p class="title has-text-centered has-text-primary is-size-5-mobile">
-      Achat de monnaie électronique
-    </p>
-    <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2">
-      Nos offres pour le dollars PM
-    </p>
-    <b-table
-      id="tab_tarif"
-      :data="data"
-      :columns="columns"
-      header-class="has-text-white"></b-table>
+    <transition enter-active-class="slideInLeft">
+      <p class="title has-text-centered has-text-primary is-size-5-mobile" v-if="showAnime1">
+        Achat de monnaie électronique
+      </p>
+    </transition>
+
+    <transition enter-active-class="slideInLeft">
+      <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2" v-if="showAnime2">
+        Nos offres pour le dollars PM
+      </p>
+    </transition>
+
+    <transition enter-active-class="slideInLeft">
+      <b-table
+        id="tab_tarif"
+        :data="data"
+        :columns="columns"
+        header-class="has-text-white"
+        v-if="showAnime3"></b-table>
+    </transition>
+
+    <transition enter-active-class="slideInLeft">
+      <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2" v-if="showAnime4">
+        Nos offres pour le dollars Bitcoin
+      </p>
+    </transition>
+
+    <transition enter-active-class="slideInLeft">
+      <b-table
+        id="tab_tarif"
+        :data="dataBitcoin"
+        :columns="columns"
+        header-class="has-text-white"
+        v-if="showAnime4"></b-table>
+    </transition>
+
     <br>
-    <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2">
-      Nos offres pour le dollars Bitcoin
-    </p>
-    <b-table
-      id="tab_tarif"
-      :data="dataBitcoin"
-      :columns="columns"
-      header-class="has-text-white"></b-table>
   </div>
 </template>
 
@@ -55,7 +74,12 @@ export default {
           headerClass: 'has-text-primary',
           numeric: true
         }
-      ]
+      ],
+      showAnime1: false,
+      showAnime2: false,
+      showAnime3: false,
+      showAnime4: false,
+      showAnime5: false
     }
   },
   computed: {
@@ -87,6 +111,24 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    const self = this
+    setTimeout(function () {
+      self.showAnime1 = true
+    }, 500)
+    setTimeout(function () {
+      self.showAnime2 = true
+    }, 700)
+    setTimeout(function () {
+      self.showAnime3 = true
+    }, 900)
+    setTimeout(function () {
+      self.showAnime4 = true
+    }, 1100)
+    setTimeout(function () {
+      self.showAnime5 = true
+    }, 1300)
   }
 }
 </script>

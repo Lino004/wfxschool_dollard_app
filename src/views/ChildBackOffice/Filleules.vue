@@ -15,7 +15,7 @@
           </p>
         </div>
         <div class="level-right">
-          <b-button type="is-primary">
+          <b-button type="is-primary" @click="$buefy.toast.open('En cours développement ...')">
             Demander un transfert
           </b-button>
         </div>
