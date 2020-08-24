@@ -30,7 +30,7 @@
           </b-field>
         </div>
         <!-- Adresse email -->
-        <div class="column is-12">
+        <div class="column is-12-mobile is-6-tablet">
           <b-field label="Adresse email">
             <b-input
               type="email"
@@ -42,7 +42,7 @@
         <div class="column is-12-mobile is-6-tablet">
           <b-field>
             <template slot="label">
-              <p> Numéro <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+              <p> Numéro <span class="has-text-danger is-size-7"> * </span> </p>
             </template>
             <div>
               <b-field :type="champs.errphone ? 'is-danger' : ''">
@@ -58,11 +58,25 @@
             </div>
           </b-field>
         </div>
-        <!-- Adresse PM -->
+        <!-- Type achat-->
         <div class="column is-12-mobile is-6-tablet">
+          <b-field label="Type d'achat">
+            <b-select placeholder="Sélectionner votre type d'achat" expanded
+              v-model="typeAchat">
+              <option
+                v-for="option in type"
+                :value="option.id"
+                :key="option.id">
+                {{ option.value }}
+              </option>
+            </b-select>
+          </b-field>
+        </div>
+        <!-- Adresse PM -->
+        <div class="column is-12-mobile is-6-tablet" v-show="typeAchat === 1">
           <b-field>
             <template slot="label">
-              <p> Adresse PM <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+              <p> Adresse PM <span class="has-text-danger is-size-7"> * </span> </p>
             </template>
             <div>
               <b-field :type="champs.erradressepm ? 'is-danger' : ''">
@@ -78,11 +92,27 @@
             </div>
           </b-field>
         </div>
+        <!-- Adresse Bitcoin -->
+        <div class="column is-12-mobile is-6-tablet" v-show="typeAchat === 2">
+          <b-field>
+            <template slot="label">
+              <p> Adresse Bitcoin <span class="has-text-danger is-size-7"> * </span> </p>
+            </template>
+            <div>
+              <b-field :type="champs.erradressebitcoin ? 'is-danger' : ''">
+                <b-input
+                  placeholder="Ex: 784ljyybhbsdFfhbk95518184ygfy"
+                  expanded
+                  v-model="champs.adressebitcoin"/>
+              </b-field>
+            </div>
+          </b-field>
+        </div>
         <!-- Montant achat en $ -->
         <div class="column is-12-mobile is-6-tablet">
           <b-field>
             <template slot="label">
-              <p> Montant achat en $ <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+              <p> Montant achat en $ <span class="has-text-danger is-size-7"> * </span> </p>
             </template>
             <div>
               <b-field :type="champs.errmontantAchat ? 'is-danger' : ''">
@@ -129,7 +159,15 @@
             </h5>
             <div class="has-text-weight-bold">
               <span class="has-text-weight-normal is-size-7">Adresse email:</span> {{getUser.email}} <br>
-              <span class="has-text-weight-normal is-size-7">Adresse perfect money:</span> {{champs.adressepm}} <br>
+              <span
+                class="has-text-weight-normal is-size-7"
+                v-if="champs.adressepm && typeAchat === 1">
+                Adresse perfect money:</span> U{{champs.adressepm}}
+              <span
+                class="has-text-weight-normal is-size-7"
+                v-if="champs.adressebitcoin && typeAchat === 2">
+                Adresse bitcoin:</span> {{champs.adressebitcoin}}
+              <br>
               <span class="has-text-weight-normal is-size-7">Numéro:</span> {{`+${indicatif} ${champs.phone}`}} <br>
             </div>
           </div>
@@ -140,7 +178,8 @@
           id="tab_tarif"
           :data="data"
           :columns="columns"
-          header-class="has-text-white"></b-table>
+          header-class="has-text-white">
+        </b-table>
       </section>
       <b-button
         type="is-primary"
@@ -153,6 +192,7 @@
           Suivant
         </span>
       </b-button>
+      <p v-if="show"> <span class="has-text-danger is-size-6 has-text-weight-bold"> * </span> : Champs obligatoire</p>
       <div class="buttons flex-1" v-if="!show">
         <b-button
           type="is-primary"
@@ -191,7 +231,8 @@ export default {
     Avatar
   },
   props: {
-    trancheOffres: Array
+    trancheOffres: Array,
+    trancheOffresBitcoin: Array
   },
   data: () => ({
     show: true,
@@ -200,9 +241,11 @@ export default {
     champs: {
       phone: '',
       adressepm: '',
+      adressebitcoin: '',
       montantAchat: 50,
       errphone: false,
       erradressepm: false,
+      erradressebitcoin: false,
       errmontantAchat: false
     },
     msgs: [],
@@ -231,20 +274,43 @@ export default {
         headerClass: 'has-text-secondary',
         numeric: true
       }
-    ]
+    ],
+    type: [
+      {
+        id: 1,
+        value: 'PM'
+      },
+      {
+        id: 2,
+        value: 'Bitcoin'
+      }
+    ],
+    typeAchat: 1
   }),
   computed: {
     ...mapState({
       getUser: 'user'
     }),
     findTranche () {
-      const liste = cloneDeep(this.trancheOffres)
-      return liste
-        .sort((a, b) => b.trancheInferieur - a.trancheInferieur)
-        .find(el => {
-          if (el.trancheSuperieur === 0 && this.champs.montantAchat >= el.trancheInferieur) return el
-          if (this.champs.montantAchat >= el.trancheInferieur && this.champs.montantAchat < el.trancheSuperieur) return el
-        })
+      if (this.typeAchat === 1) {
+        const liste = cloneDeep(this.trancheOffres)
+        return liste
+          .sort((a, b) => b.trancheInferieur - a.trancheInferieur)
+          .find(el => {
+            if (el.trancheSuperieur === 0 && this.champs.montantAchat >= el.trancheInferieur) return el
+            if (this.champs.montantAchat >= el.trancheInferieur && this.champs.montantAchat < el.trancheSuperieur) return el
+          })
+      }
+      if (this.typeAchat === 2) {
+        const liste = cloneDeep(this.trancheOffresBitcoin)
+        return liste
+          .sort((a, b) => b.trancheInferieur - a.trancheInferieur)
+          .find(el => {
+            if (el.trancheSuperieur === 0 && this.champs.montantAchat >= el.trancheInferieur) return el
+            if (this.champs.montantAchat >= el.trancheInferieur && this.champs.montantAchat < el.trancheSuperieur) return el
+          })
+      }
+      return ''
     },
     montantPayer () {
       if (this.findTranche === undefined) return { class: 'has-text-danger', value: 'Montant d\'achat incorrect' }
@@ -265,6 +331,7 @@ export default {
       this.showMsgsError = false
       this.champs.errphone = false
       this.champs.erradressepm = false
+      this.champs.erradressebitcoin = false
       this.champs.errmontantAchat = false
     },
     validation () {
@@ -279,15 +346,20 @@ export default {
         isValid = false
         this.champs.errphone = true
       }
-      if (this.champs.adressepm.length === 0) {
+      if (this.typeAchat === 1 && this.champs.adressepm.toString().length === 0) {
         this.msgs.push('<b>L\'adresse Perfect Money</b> est obligatoire')
         isValid = false
         this.champs.erradressepm = true
       }
-      if (this.champs.adressepm.length < 8) {
+      if (this.typeAchat === 1 && this.champs.adressepm.toString().length !== 8) {
         this.msgs.push('<b>L\'adresse Perfect Money</b> doit contenir 8 chiffres')
         isValid = false
         this.champs.erradressepm = true
+      }
+      if (this.typeAchat === 2 && this.champs.adressebitcoin.length === 0) {
+        this.msgs.push('<b>L\'adresse Bitcoin</b> est obligatoire')
+        isValid = false
+        this.champs.erradressebitcoin = true
       }
       if (this.champs.montantAchat.length >= 50) {
         this.msgs.push('Le <b>montant d\'achat</b> doit être supérieur à 50$')

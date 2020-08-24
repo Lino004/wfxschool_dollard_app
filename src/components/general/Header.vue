@@ -7,13 +7,40 @@
     <template slot="end">
       <b-navbar-item tag="div">
         <div class="buttons">
+
+          <!-- Acceuil -->
+          <b-tooltip label="Acceuil"
+            position="is-bottom">
+            <b-button type="is-primary"
+              icon-right="home"
+              class="mr-1"
+              :class="$route.name === 'VenteDollar' ? 'is-active' : ''"
+              tag="router-link"
+              :to="{ name: 'VenteDollar' }">
+            </b-button>
+          </b-tooltip>
+
+          <!-- Tableau de bord -->
+          <b-tooltip label="Tableau de bord"
+            position="is-bottom">
+            <b-button type="is-primary"
+              icon-right="vector-union"
+              class="mr-1"
+              :class="$route.path.includes('back-office') ? 'is-active' : ''"
+              tag="router-link"
+              :to="{ name: 'Resume' }">
+            </b-button>
+          </b-tooltip>
+
+          <!-- Déconnexion -->
           <b-tooltip label="Déconnexion"
             position="is-bottom">
             <b-button type="is-primary"
               icon-right="logout"
-              @click="logout()">
+              @click="logout()"
+              tag="a">
             </b-button>
-        </b-tooltip>
+          </b-tooltip>
         </div>
       </b-navbar-item>
     </template>
@@ -31,7 +58,7 @@ export default {
     }),
     logout () {
       this.actionLogout(null)
-      this.$router.push({ name: 'Login' })
+      this.$router.replace({ name: 'Login' })
     }
   }
 }

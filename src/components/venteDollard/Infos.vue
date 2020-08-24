@@ -8,14 +8,23 @@
     </figure>
 
     <p class="title has-text-centered has-text-primary is-size-5-mobile">
-      Vente de dollar
+      Achat de monnaie électronique
     </p>
-    <p class="subtitle has-text-centered has-text-primary is-size-5-mobile">
-      Nos offres
+    <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2">
+      Nos offres pour le dollars PM
     </p>
     <b-table
       id="tab_tarif"
       :data="data"
+      :columns="columns"
+      header-class="has-text-white"></b-table>
+    <br>
+    <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2">
+      Nos offres pour le dollars Bitcoin
+    </p>
+    <b-table
+      id="tab_tarif"
+      :data="dataBitcoin"
       :columns="columns"
       header-class="has-text-white"></b-table>
   </div>
@@ -26,7 +35,8 @@ import Header from '@/components/general/Header.vue'
 
 export default {
   props: {
-    trancheOffres: Array
+    trancheOffres: Array,
+    trancheOffresBitcoin: Array
   },
   components: {
     Header
@@ -41,8 +51,9 @@ export default {
         },
         {
           field: 'prix',
-          label: 'Prix',
-          headerClass: 'has-text-primary'
+          label: 'Prix (FCFA)',
+          headerClass: 'has-text-primary',
+          numeric: true
         }
       ]
     }
@@ -53,12 +64,26 @@ export default {
         if (el.trancheSuperieur === 0) {
           return {
             tranche: `À partie de ${el.trancheInferieur}$`,
-            prix: `${el.prix} FCFA`
+            prix: `${el.prix}`
           }
         }
         return {
           tranche: `${el.trancheInferieur}$ - ${el.trancheSuperieur}$`,
-          prix: `${el.prix} FCFA`
+          prix: `${el.prix}`
+        }
+      })
+    },
+    dataBitcoin () {
+      return this.trancheOffresBitcoin.map(el => {
+        if (el.trancheSuperieur === 0) {
+          return {
+            tranche: `À partie de ${el.trancheInferieur}$`,
+            prix: `${el.prix}`
+          }
+        }
+        return {
+          tranche: `${el.trancheInferieur}$ - ${el.trancheSuperieur}$`,
+          prix: `${el.prix}`
         }
       })
     }

@@ -6,11 +6,15 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '*',
+    redirect: '/error-page'
+  },
+  /* {
     path: '/',
     name: 'Home',
-    redirect: '/login',
+    redirect: '/vente-dollar',
     component: () => import('../views/Home.vue')
-  },
+  }, */
   {
     path: '/login',
     name: 'Login',
@@ -37,10 +41,43 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/vente-dollar',
+    path: '/', // vente-dollar
     name: 'VenteDollar',
     component: () => import('../views/VenteDollar.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/back-office',
+    name: 'BackOffice',
+    component: () => import('../views/BackOffice.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Resume',
+        component: () => import('../views/ChildBackOffice/Resume.vue')
+      },
+      {
+        path: 'liste-filleules',
+        name: 'Filleules',
+        component: () => import('../views/ChildBackOffice/Filleules.vue')
+      },
+      {
+        path: 'liste-achats',
+        name: 'Achats',
+        component: () => import('../views/ChildBackOffice/Achats.vue')
+      },
+      {
+        path: 'parametre',
+        name: 'Setting',
+        component: () => import('../views/ChildBackOffice/Setting.vue')
+      }
+    ]
+  },
+  {
+    path: '/error-page',
+    name: 'Error',
+    component: () => import('../views/Error.vue')
   }
 ]
 

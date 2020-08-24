@@ -7,12 +7,19 @@
             column flex-1 is-full-height has-background-white
             px-6 form_vente is-5 is-4-desktop box_shadow_1"
           v-show="!showOneColumn || show">
-          <Infos :tranche-offres="trancheOffres"
-                :tranche-offres-bitcoin="trancheOffresBitcoin"/>
+          <Menu/>
         </div>
         <div class="column flex-1 px-6 form_vente" v-show="!showOneColumn || !show">
-          <Form :tranche-offres="trancheOffres"
-                :tranche-offres-bitcoin="trancheOffresBitcoin"/>
+          <div class="container">
+            <figure class="logo_backoffice">
+              <img
+              src="@/assets/imgs/logo_white.png"
+              class="image is-width-160 mx_auto"/>
+            </figure>
+            <div class="py-5">
+              <router-view/>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -53,13 +60,11 @@
 </template>
 
 <script>
-import Infos from '@/components/venteDollard/Infos.vue'
-import Form from '@/components/venteDollard/Form.vue'
+import Menu from '@/components/backOffice/Menu.vue'
 
 export default {
   components: {
-    Infos,
-    Form
+    Menu
   },
   data () {
     return {
@@ -67,15 +72,7 @@ export default {
       window: {
         width: 0,
         height: 0
-      },
-      trancheOffres: [
-        { trancheInferieur: 50, trancheSuperieur: 0, prix: 620 },
-        { trancheInferieur: 1000, trancheSuperieur: 0, prix: 610 }
-      ],
-      trancheOffresBitcoin: [
-        { trancheInferieur: 50, trancheSuperieur: 0, prix: 610 },
-        { trancheInferieur: 1000, trancheSuperieur: 0, prix: 600 }
-      ]
+      }
     }
   },
   watch: {
