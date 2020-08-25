@@ -62,4 +62,17 @@
       }
     }
   }
+  #header_app2 {
+    & .navbar-brand {
+      display: none;
+    }
+    & .navbar-menu.is-active {
+      box-shadow: none;
+      background-color: transparent;
+      & .navbar-end {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
 }

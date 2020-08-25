@@ -50,6 +50,10 @@
           </div>
         </div>
       </div>
+
+      <div class="hero-foot">
+        <AppFooter />
+      </div>
     </section>
   </div>
 </template>
@@ -57,10 +61,12 @@
 <script>
 import { mapActions } from 'vuex'
 import MsgError from '@/components/general/MsgError.vue'
+import Footer from '@/components/general/Footer.vue'
 
 export default {
   components: {
-    MsgError
+    MsgError,
+    AppFooter: Footer
   },
   data: () => ({
     champs: {

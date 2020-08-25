@@ -159,6 +159,9 @@
           <ConfirmRegister :email="champs.email" v-show="isRegistered"/>
         </div>
       </div>
+      <div class="hero-foot">
+        <AppFooter />
+      </div>
     </section>
   </div>
 </template>
@@ -170,11 +173,13 @@ import { confirmeUser } from '@/api/auth/index'
 
 import MsgError from '@/components/general/MsgError.vue'
 import ConfirmRegister from '@/components/register/ConfirmRegister.vue'
+import Footer from '@/components/general/Footer.vue'
 
 export default {
   components: {
     MsgError,
-    ConfirmRegister
+    ConfirmRegister,
+    AppFooter: Footer
   },
   data: () => ({
     show: true,

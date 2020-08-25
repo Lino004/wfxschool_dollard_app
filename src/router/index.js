@@ -9,12 +9,22 @@ const routes = [
     path: '*',
     redirect: '/error-page'
   },
-  /* {
+  {
     path: '/',
-    name: 'Home',
-    redirect: '/vente-dollar',
-    component: () => import('../views/Home.vue')
-  }, */
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('../views/ChildHome/Home.vue')
+      },
+      {
+        path: '/offres',
+        name: 'Offres',
+        component: () => import('../views/ChildHome/Offres.vue')
+      }
+    ]
+  },
   {
     path: '/login',
     name: 'Login',
@@ -41,7 +51,7 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/', // vente-dollar
+    path: '/vente-dollar',
     name: 'VenteDollar',
     component: () => import('../views/VenteDollar.vue'),
     meta: { requiresAuth: true }

@@ -121,9 +121,10 @@ a.button.is-primary{
   align-items: center;
 }
 
-/* .logo {
-  &_backoffice {
-    position: absolute;
-    width: 120px;
-  }
-} */
+.vue-typer .custom.char{
+  color: white !important
+}
+
+.tabs.is-boxed a:hover.primary {
+  color: $primary !important;
+}

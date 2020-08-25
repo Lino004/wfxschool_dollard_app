@@ -55,16 +55,6 @@ export default {
         headerClass: 'has-text-primary'
       },
       {
-        field: 'email',
-        label: 'Email',
-        headerClass: 'has-text-primary'
-      },
-      {
-        field: 'phone',
-        label: 'Numéro',
-        headerClass: 'has-text-primary'
-      },
-      {
         field: 'gain',
         label: 'Gain (FCFA)',
         headerClass: 'has-text-primary',

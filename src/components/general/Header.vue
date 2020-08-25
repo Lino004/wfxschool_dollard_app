@@ -8,11 +8,23 @@
       <b-navbar-item tag="div">
         <div class="buttons">
 
-          <!-- Acceuil -->
-          <b-tooltip label="Acceuil"
+          <!-- Vente -->
+          <b-tooltip label="Accueil"
             position="is-bottom">
             <b-button type="is-primary"
               icon-right="home"
+              class="mr-1"
+              :class="$route.name === 'home' ? 'is-active' : ''"
+              tag="router-link"
+              :to="{ name: 'Home' }">
+            </b-button>
+          </b-tooltip>
+
+          <!-- Vente -->
+          <b-tooltip label="Vente"
+            position="is-bottom">
+            <b-button type="is-primary"
+              icon-right="cash-usd"
               class="mr-1"
               :class="$route.name === 'VenteDollar' ? 'is-active' : ''"
               tag="router-link"

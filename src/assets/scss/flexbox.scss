@@ -1,6 +1,9 @@
 .align_items_none {
   align-items: flex-start !important;
 }
+.align-center {
+  align-items: center !important;
+}
 .flex-1{
   flex: 1;
 }
@@ -9,4 +12,7 @@
 }
 .justify-start {
   justify-content: start;
+}
+.flex-column {
+  flex-direction: column;
 }
