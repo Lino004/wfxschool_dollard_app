@@ -377,7 +377,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.getUser.pays)
     this.listPays = getListePays()
     this.indicatif = this.listPays.find(el => el.id === this.getUser.pays).indicatif
     this.champs.phone = this.getUser.phone
