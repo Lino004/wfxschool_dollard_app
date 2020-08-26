@@ -10,7 +10,7 @@
           id="header_app2">
           <template slot="end">
             <b-navbar-item tag="div">
-              <div class="buttons" v-if="!getUser">
+              <div class="buttons" v-if="!getUser.nom">
 
                 <b-button
                   type="is-primary"
