@@ -1,7 +1,83 @@
-# wfxscholl_dollard_app DOC
+# WfxSchool Dollars DOC Api
 
+## Inscription (POST)
+```
+{
+    nom: 'HOUNKANRIN',
+    prenom: 'Mouhayad',
+    email: 'h.ayinlamouhayad@gmail.com',
+    phone: '61773532',
+    indicartif: 226,
+    password: '----',
+    pays: 52,
+    is_ad: false
+}
+```
+## Achat de monnaie (POST)
+Lors d'un achat de PM
+```
+{
+    id: '84dz4dz4d5zd784dedjnkefde45dehvhe',
+    phone: '61773532',
+    indicartif: 226,
+    typeAchat: 'PM',
+    adressePm: 'U12345678',
+    adresseBitcoin: '',
+    montantAchat: 50,
+    sommePaye: 31000
+}
+```
+Lors d'un achat de Bitcoin
+```
+{
+    id: '84dz4dz4d5zd784dedjnkefde45dehvhe',
+    phone: '61773532',
+    indicartif: 226,
+    typeAchat: 'BITCOIN',
+    adressePm: '',
+    adresseBitcoin: 'Ddezdcekje8c5e45d56e2d5e5d5ede5',
+    montantAchat: 50,
+    sommePaye: 31000
+}
+```
+## Résumé (GET)
+Résumé des oppérations de l'utilisateur
+```
+{
+    nbrFilleule: 0,
+    totalAchat: 5000, 
+    totalGain: 0
+}
+```
+## Liste de Filleule (GET)
+Une liste paginée des filleules
+```
+[
+    {
+        date: '22/08/2020',
+        nom: 'Test',
+        prenom: 'Permi',
+        id: 'ifde5fd5edfsedfncsdfsdfjbcsd4c45df5'
+        gain: 1500
+    }
+]
+```
+## Liste des achats (GET)
+Une liste paginée des achats
+```
+[
+    {
+        date: '22/08/2020',
+        description: 'Achat Dollars PM',
+        qtt: 50,
+        prix: 620,
+        id: 0,
+        total: 31000
+    }
+]
+```
 ## Les offres
-### Liste des offres
+### Liste des offres (GET)
 Récupération de la liste des offres
 ```
 [
@@ -21,7 +97,7 @@ Récupération de la liste des offres
     }
 ]
 ```
-### Ajouter une offre
+### Ajouter une offre (POST)
 Ajouter de nouvelles offres
 ```
 {
@@ -31,7 +107,8 @@ Ajouter de nouvelles offres
     type: 'PM'
 }
 ```
-### Modifier une offre
+### Modifier une offre (PUT)
 Modifier une offre existante
-### Supprimer une offre
+### Supprimer une offre (DELETE)
 Supprimer une offre existante
+appData

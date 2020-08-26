@@ -53,7 +53,7 @@
               </b-icon>
             </div>
             <div class="media-content has-text-centered">
-              <p class="is-size-5 has-text-weight-bold">Solde (FCFA)</p>
+              <p class="is-size-5 has-text-weight-bold">Gain (FCFA)</p>
               <h4 class="is-size-4 has-text-weight-bold has-text-primary">
                 0
               </h4>
