@@ -158,18 +158,23 @@
               <h5 class="is-size-5 has-text-weight-bold has-text-secondary">
                 {{`${getUser.nom} ${getUser.prenom}`}}
               </h5>
-              <div class="has-text-weight-bold">
-                <span class="has-text-weight-normal is-size-7">Adresse email:</span> {{getUser.email}} <br>
-                <span
-                  class="has-text-weight-normal is-size-7"
-                  v-if="champs.adressepm && typeAchat === 1">
-                  Adresse perfect money:</span> U{{champs.adressepm}}
-                <span
-                  class="has-text-weight-normal is-size-7"
-                  v-if="champs.adressebitcoin && typeAchat === 2">
-                  Adresse bitcoin:</span> {{champs.adressebitcoin}}
-                <br>
-                <span class="has-text-weight-normal is-size-7">Numéro:</span> {{`+${indicatif} ${champs.phone}`}} <br>
+              <div class="has-text-weight-normal">
+                <p class="is-size-7">
+                  Adresse email:
+                  <span class="has-text-weight-bold is-size-6">{{getUser.email}}</span>
+                </p>
+                <p class="is-size-7" v-if="champs.adressepm && typeAchat === 1">
+                  Adresse perfect money:
+                  <span class="has-text-weight-bold is-size-6">U{{champs.adressepm}}</span>
+                </p>
+                <p class="is-size-7" v-if="champs.adressebitcoin && typeAchat === 2">
+                  Adresse bitcoin:
+                  <span class="has-text-weight-bold is-size-6">{{champs.adressebitcoin}}</span>
+                </p>
+                <p class="is-size-7">
+                  Numéro:
+                  <span class="has-text-weight-bold is-size-6">{{`+${indicatif} ${champs.phone}`}}</span>
+                </p>
               </div>
             </div>
           </div>

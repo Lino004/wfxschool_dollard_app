@@ -32,6 +32,7 @@ export default new Vuex.Store({
   },
   plugins: [
     createPersistedState({
+      key: 'wfx_dollars',
       paths: ['user']
     })
   ]

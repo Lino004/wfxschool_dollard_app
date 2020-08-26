@@ -97,7 +97,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  console.log(store.state.user.nom)
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.state.user.nom) {
       next({
