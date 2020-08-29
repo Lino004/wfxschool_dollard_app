@@ -24,7 +24,8 @@ Lors d'un achat de PM
     adressePm: 'U12345678',
     adresseBitcoin: '',
     montantAchat: 50,
-    sommePaye: 31000
+    sommePaye: 31000,
+    prixUnitaire: 620
 }
 ```
 Lors d'un achat de Bitcoin
@@ -37,7 +38,8 @@ Lors d'un achat de Bitcoin
     adressePm: '',
     adresseBitcoin: 'Ddezdcekje8c5e45d56e2d5e5d5ede5',
     montantAchat: 50,
-    sommePaye: 31000
+    sommePaye: 30500,
+    prixUnitaire: 610
 }
 ```
 ## Résumé (GET)
@@ -69,10 +71,20 @@ Une liste paginée des achats
     {
         date: '22/08/2020',
         description: 'Achat Dollars PM',
-        qtt: 50,
-        prix: 620,
+        montantAchat: 50,
+        prixUnitaire: 620,
+        typeAchat: 'PM',
         id: 0,
         total: 31000
+    },
+    {
+        date: '22/08/2020',
+        description: 'Achat Dollars Bitcoin',
+        montantAchat: 50,
+        prixUnitaire: 610,
+        typeAchat: 'BITCOIN',
+        id: 1,
+        total: 30500
     }
 ]
 ```
