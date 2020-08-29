@@ -25,6 +25,7 @@ Lors d'un achat de PM
     adresseBitcoin: '',
     montantAchat: 50,
     sommePaye: 31000,
+    description: 'Achat Dollars PM',
     prixUnitaire: 620
 }
 ```
@@ -39,6 +40,7 @@ Lors d'un achat de Bitcoin
     adresseBitcoin: 'Ddezdcekje8c5e45d56e2d5e5d5ede5',
     montantAchat: 50,
     sommePaye: 30500,
+    description: 'Achat Dollars Bitcoin',
     prixUnitaire: 610
 }
 ```
