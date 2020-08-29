@@ -56,7 +56,7 @@ Une liste paginée des filleules
 ```
 [
     {
-        date: '22/08/2020',
+        lastDateAchat: '22/08/2020',
         nom: 'Test',
         prenom: 'Permi',
         id: 'ifde5fd5edfsedfncsdfsdfjbcsd4c45df5'
