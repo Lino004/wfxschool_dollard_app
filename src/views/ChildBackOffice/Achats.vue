@@ -21,7 +21,9 @@
           :columns="columns"
           header-class="has-text-white"
           paginated
-          per-page="5">
+          :per-page="perPage"
+          :current-page="page"
+          :loading="isLoading">
         </b-table>
       </div>
     </div>
@@ -30,6 +32,8 @@
 
 <script>
 import moment from 'moment'
+import { listeAchatUser } from '@/api/achat'
+import { mapState } from 'vuex'
 
 export default {
   data: () => ({
@@ -45,39 +49,49 @@ export default {
         headerClass: 'has-text-primary'
       },
       {
-        field: 'qtt',
+        field: 'montantAchat',
         label: 'Quantité ($)',
         headerClass: 'has-text-primary',
         numeric: true
       },
       {
-        field: 'prix',
+        field: 'prixUnitaire',
         label: 'Prix Unit. (FCFA)',
         headerClass: 'has-text-primary',
         numeric: true
       },
       {
-        field: 'total',
+        field: 'sommePaye',
         label: 'Total (FCFA)',
         headerClass: 'has-text-primary',
         numeric: true
       }
     ],
-    dataTab: [
-      {
-        date: moment().format('L'),
-        description: 'Achat Dollars PM',
-        qtt: 50,
-        prix: 620,
-        total: 31000
-      }
-    ]
+    dataTab: [],
+    perPage: 2,
+    page: 1,
+    isLoading: false
   }),
   computed: {
+    ...mapState({
+      getUser: 'user'
+    }),
     total () {
-      return this.dataTab.map(el => el.total)
+      if (!this.dataTab.length) return 0
+      return this.dataTab.map(el => parseInt(el.sommePaye))
         .reduce((a, b) => a + b)
     }
+  },
+  methods: {
+    async getList () {
+      this.isLoading = true
+      this.dataTab = (await listeAchatUser(this.getUser.identifiant, this.page, this.perPage)).data
+      this.isLoading = false
+    },
+    formatDate: (date) => moment(date).format('L')
+  },
+  async mounted () {
+    await this.getList()
   }
 }
 </script>

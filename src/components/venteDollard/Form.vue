@@ -9,7 +9,7 @@
     </p>
 
     <transition enter-active-class="zoomIn">
-      <div class="box mx_auto" v-if="showAnime1">
+      <div class="box mx_auto" v-if="showAnime1" ref="boxFormAchat">
         <MsgError :msgs="msgs" v-if="showMsgsError" @close="msgsErrorClose"/>
         <section class="columns is-multiline is-mobile" v-if="show">
           <!-- Nom -->
@@ -212,7 +212,7 @@
           <b-button
             type="is-primary"
             class="my-5 flex-1"
-            @click="$buefy.toast.open('En cours développement ...')">
+            @click="confirmAchat">
             <span class="has-text-weight-bold">
               Confirmer l'achat
             </span>
@@ -231,6 +231,7 @@ import Avatar from 'vue-avatar'
 import cloneDeep from 'lodash/cloneDeep'
 import getListePays from '@/services/payes'
 import MsgError from '@/components/general/MsgError.vue'
+import { achatDollar } from '@/api/achat'
 
 export default {
   components: {
@@ -382,6 +383,35 @@ export default {
     next () {
       if (this.validation()) this.show = !this.show
       else this.showMsgsError = true
+    },
+    async confirmAchat () {
+      const loadingComponent = this.$buefy.loading.open({ container: null })
+      try {
+        const typeAchat = this.type.find(el => el.id === this.typeAchat).value
+        const data = {
+          user: this.getUser.identifiant,
+          phone: this.getUser.phone,
+          indicartif: parseInt(this.getUser.indicartif),
+          typeAchat: typeAchat,
+          adressePm: 'U' + this.champs.adressepm.toString(),
+          adresseBitcoin: this.champs.adressebitcoin,
+          montantAchat: this.champs.montantAchat,
+          sommePaye: this.montantPayer.value,
+          description: 'Achat Dollars ' + typeAchat,
+          prixUnitaire: this.findTranche.prix
+        }
+        if (this.typeAchat === 1) data.adresseBitcoin = null
+        if (this.typeAchat === 2) data.adressePm = null
+        await achatDollar(data)
+        this.$buefy.toast.open({
+          message: 'Votre demande d\'achat a été envoyé',
+          type: 'is-success'
+        })
+        loadingComponent.close()
+      } catch (error) {
+        console.log(error.response)
+        loadingComponent.close()
+      }
     }
   },
   mounted () {
