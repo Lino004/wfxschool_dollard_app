@@ -98,7 +98,7 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.state.user.nom) {
+    if (store.getters.isconnect) {
       next({
         path: '/'
       })

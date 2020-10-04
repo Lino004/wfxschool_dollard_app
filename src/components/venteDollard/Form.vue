@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="isConnect">
     <div class="py-3 is-hidden-mobile"></div>
     <p class="title has-text-centered has-text-white is-size-5-mobile pb-3">
       Formulaire d'achat
@@ -226,7 +226,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import Avatar from 'vue-avatar'
 import cloneDeep from 'lodash/cloneDeep'
 import getListePays from '@/services/payes'
@@ -298,6 +298,9 @@ export default {
   computed: {
     ...mapState({
       getUser: 'user'
+    }),
+    ...mapGetters({
+      isConnect: 'isConnect'
     }),
     findTranche () {
       if (this.typeAchat === 1) {
@@ -382,8 +385,8 @@ export default {
     }
   },
   mounted () {
-    this.listPays = getListePays()
-    this.indicatif = this.listPays.find(el => el.id === this.getUser.pays).indicatif
+    this.listPays = getListePays
+    this.indicatif = getListePays.find(el => el.id === this.getUser.pays).indicatif
     this.champs.phone = this.getUser.phone
     const self = this
     setTimeout(function () {

@@ -1338,10 +1338,4 @@ const liste = [
   }
 ]
 
-export default function getListePays () {
-  return liste.sort((a, b) => {
-    if (a.nom > b.nom) return 1
-    if (a.nom < b.nom) return -1
-    return 0
-  })
-}
+export default liste.sort((a, b) => a.nom.localeCompare(b.nom))

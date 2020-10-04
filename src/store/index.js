@@ -24,15 +24,18 @@ export default new Vuex.Store({
       const data = (await login(infoUser)).data
       commit('SET_USER', data)
     },
-    async register (infoUser) {
+    async register (context, infoUser) {
       await create(infoUser)
     }
+  },
+  getters: {
+    isConnect: (state) => state.user !== null && state.user.nom !== undefined
   },
   modules: {
   },
   plugins: [
     createPersistedState({
-      key: 'wfx_dollars',
+      key: process.env.NODE_ENV === 'production' ? 'wfx_dollars' : 'wfx_dollars_dev',
       paths: ['user']
     })
   ]

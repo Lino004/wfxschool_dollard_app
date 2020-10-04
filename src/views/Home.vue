@@ -10,7 +10,7 @@
           id="header_app2">
           <template slot="end">
             <b-navbar-item tag="div">
-              <div class="buttons" v-if="!getUser.nom">
+              <div class="buttons" v-if="!isConnect">
 
                 <b-button
                   type="is-primary"
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import Footer from '@/components/general/Footer.vue'
 
 export default {
@@ -87,8 +87,8 @@ export default {
     AppFooter: Footer
   },
   computed: {
-    ...mapState({
-      getUser: 'user'
+    ...mapGetters({
+      isConnect: 'isConnect'
     })
   },
   methods: {

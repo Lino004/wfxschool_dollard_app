@@ -19,7 +19,7 @@
                   type="email"
                   placeholder="exemple@test.com"
                   v-model.trim="champs.email"
-                  @keypress.enter="login"/>
+                  @keypress.native="keyPress"/>
               </b-field>
 
               <b-field label="Mot de passe"  :type="champs.errpassword ? 'is-danger' : ''">
@@ -27,7 +27,7 @@
                   type="password"
                   placeholder="Votre mot de passe"
                   v-model="champs.password"
-                  @keypress.enter="login"/>
+                  @keypress.native="keyPress"/>
               </b-field>
             </section>
             <b-button
@@ -134,6 +134,9 @@ export default {
         }
         loadingComponent.close()
       }
+    },
+    keyPress (e) {
+      if (e.key === 'Enter') this.login()
     }
   }
 }

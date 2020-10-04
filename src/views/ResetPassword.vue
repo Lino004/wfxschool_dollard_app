@@ -21,7 +21,7 @@
               <div class="column is-12">
                 <b-field :type="champs.erremail ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Adresse email <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Adresse email <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     type="email"
@@ -33,7 +33,7 @@
               <div class="column is-12" v-if="$route.name === 'ResetPasswordConfirme'">
                 <b-field :type="champs.errpassword ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Mot de passe <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Mot de passe <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     type="password"
@@ -45,7 +45,7 @@
               <div class="column is-12" v-if="$route.name === 'ResetPasswordConfirme'">
                 <b-field :type="champs.errconfPassword ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Confirmer le mot de passe <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Confirmer le mot de passe <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     type="password"
@@ -63,6 +63,7 @@
                 {{ $route.name === 'ResetPasswordConfirme' ? 'Modifier le mot de passe' : 'Envoyer'}}
               </span>
             </b-button>
+            <MenuBox/>
           </div>
         </div>
       </div>
@@ -73,11 +74,13 @@
 <script>
 import { mapActions } from 'vuex'
 import MsgError from '@/components/general/MsgError.vue'
+import MenuBox from '@/components/general/MenuBox.vue'
 import { initResetPassword, resetPassword } from '@/api/auth/index'
 
 export default {
   components: {
-    MsgError
+    MsgError,
+    MenuBox
   },
   data: () => ({
     champs: {

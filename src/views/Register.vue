@@ -18,7 +18,7 @@
               <div class="column is-6">
                 <b-field :type="champs.errnom ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Nom <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Nom <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     placeholder="Ex: HOUNTONDJI"
@@ -30,7 +30,7 @@
               <div class="column is-6">
                 <b-field :type="champs.errprenom ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Prénom(s) <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Prénom(s) <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     placeholder="Ex: Jean"
@@ -42,7 +42,7 @@
               <div class="column is-6">
                 <b-field :type="champs.errpays ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Pays de résidence <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Pays de résidence <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-autocomplete
                     v-model="nomPays"
@@ -62,7 +62,7 @@
               <div class="column is-6">
                 <b-field>
                   <template slot="label">
-                    <p> Numéro <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Numéro <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <div>
                     <b-field :type="champs.errphone ? 'is-danger' : ''">
@@ -87,7 +87,7 @@
               <div class="column is-12">
                 <b-field :type="champs.erremail ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Adresse email <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Adresse email <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     type="email"
@@ -99,7 +99,7 @@
               <div class="column is-12">
                 <b-field :type="champs.errpassword ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Mot de passe <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Mot de passe <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     type="password"
@@ -111,7 +111,7 @@
               <div class="column is-12">
                 <b-field :type="champs.errconfPassword ? 'is-danger' : ''">
                   <template slot="label">
-                    <p> Confirmer le mot de passe <span class="has-text-danger is-size-7"> (Obligatoire) </span> </p>
+                    <p> Confirmer le mot de passe <span class="has-text-danger is-size-7"> (*) </span> </p>
                   </template>
                   <b-input
                     type="password"
@@ -199,7 +199,7 @@ export default {
       errpassword: '',
       errconfPassword: ''
     },
-    listPays: [],
+    listPays: getListePays,
     nomPays: '',
     indicatif: '',
     msgs: [],
@@ -325,7 +325,7 @@ export default {
     }
   },
   async mounted () {
-    this.listPays = getListePays()
+    this.listPays = getListePays
     if (this.$route.name === 'RegisterConfirme') {
       const loadingComponent = this.$buefy.loading.open({ container: null })
       await confirmeUser(this.$route.params.id)
