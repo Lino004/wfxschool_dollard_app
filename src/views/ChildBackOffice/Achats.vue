@@ -18,12 +18,26 @@
         <b-table
           id="tab_tarif"
           :data="dataTab"
-          :columns="columns"
           header-class="has-text-white"
           paginated
+          backend-pagination
           :per-page="perPage"
           :current-page="page"
+          :total="totalListe"
+          @page-change="onPageChange"
           :loading="isLoading">
+          <template v-for="column in columns">
+            <b-table-column :key="column.id" v-bind="column">
+              <template v-slot="props">
+                <div v-if="column.field === 'date'">
+                  {{ formatDate(props.row[column.field]) }}
+                </div>
+                <div v-else>
+                  {{ props.row[column.field] }}
+                </div>
+              </template>
+            </b-table-column>
+          </template>
         </b-table>
       </div>
     </div>
@@ -68,27 +82,31 @@ export default {
       }
     ],
     dataTab: [],
-    perPage: 2,
+    perPage: 10,
     page: 1,
+    totalListe: 0,
+    total: 0,
     isLoading: false
   }),
   computed: {
     ...mapState({
       getUser: 'user'
-    }),
-    total () {
-      if (!this.dataTab.length) return 0
-      return this.dataTab.map(el => parseInt(el.sommePaye))
-        .reduce((a, b) => a + b)
-    }
+    })
   },
   methods: {
     async getList () {
       this.isLoading = true
-      this.dataTab = (await listeAchatUser(this.getUser.identifiant, this.page, this.perPage)).data
+      const res = await listeAchatUser(this.getUser.identifiant, this.page, this.perPage)
+      this.dataTab = res.data.liste
+      this.totalListe = res.data.totalListe
+      this.total = res.data.totalSomme
       this.isLoading = false
     },
-    formatDate: (date) => moment(date).format('L')
+    formatDate: (date) => moment(date).format('L'),
+    onPageChange (page) {
+      this.page = page
+      this.getList()
+    }
   },
   async mounted () {
     await this.getList()

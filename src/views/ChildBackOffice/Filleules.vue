@@ -26,7 +26,12 @@
           :columns="columns"
           header-class="has-text-white"
           paginated
-          per-page="5">
+          :per-page="10">
+          <template slot="empty">
+            <div class="container has-text-centered">
+              Aucun filleule
+            </div>
+          </template>
         </b-table>
       </div>
     </div>
@@ -35,12 +40,14 @@
 
 <script>
 import moment from 'moment'
+import { listeChild } from '@/api/achat'
+import { mapState } from 'vuex'
 
 export default {
   data: () => ({
     columns: [
       {
-        field: 'date',
+        field: 'lastDateAchat',
         label: 'Date',
         headerClass: 'has-text-primary'
       },
@@ -61,62 +68,34 @@ export default {
         numeric: true
       }
     ],
-    dataTab: [
-      {
-        date: moment().format('L'),
-        nom: 'Test',
-        prenom: 'Permi',
-        email: 'test@test.com',
-        phone: '22912345678',
-        gain: 1500
-      },
-      {
-        date: moment().format('L'),
-        nom: 'Test',
-        prenom: 'Permi',
-        email: 'test@test.com',
-        phone: '22912345678',
-        gain: 1500
-      },
-      {
-        date: moment().format('L'),
-        nom: 'Test',
-        prenom: 'Permi',
-        email: 'test@test.com',
-        phone: '22912345678',
-        gain: 1500
-      },
-      {
-        date: moment().format('L'),
-        nom: 'Test',
-        prenom: 'Permi',
-        email: 'test@test.com',
-        phone: '22912345678',
-        gain: 1500
-      },
-      {
-        date: moment().format('L'),
-        nom: 'Test',
-        prenom: 'Permi',
-        email: 'test@test.com',
-        phone: '22912345678',
-        gain: 1500
-      },
-      {
-        date: moment().format('L'),
-        nom: 'Test',
-        prenom: 'Permi',
-        email: 'test@test.com',
-        phone: '22912345678',
-        gain: 1500
-      }
-    ]
+    dataTab: [],
+    isLoading: false
   }),
   computed: {
+    ...mapState({
+      getUser: 'user'
+    }),
     total () {
+      if (!this.dataTab.length) return 0
       return this.dataTab.map(el => el.gain)
         .reduce((a, b) => a + b)
     }
+  },
+  methods: {
+    async getList () {
+      this.isLoading = true
+      const res = await listeChild(this.getUser.identifiant)
+      this.dataTab = res.data
+      this.isLoading = false
+    },
+    formatDate: (date) => moment(date).format('L'),
+    onPageChange (page) {
+      this.page = page
+      this.getList()
+    }
+  },
+  async mounted () {
+    await this.getList()
   }
 }
 </script>

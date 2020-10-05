@@ -67,8 +67,19 @@
           <b-table
             id="tab_tarif"
             :data="dataTab"
-            :columns="columns"
             header-class="has-text-white">
+            <template v-for="column in columns">
+              <b-table-column :key="column.id" v-bind="column">
+                <template v-slot="props">
+                  <div v-if="column.field === 'date'">
+                    {{ formatDate(props.row[column.field]) }}
+                  </div>
+                  <div v-else>
+                    {{ props.row[column.field] }}
+                  </div>
+                </template>
+              </b-table-column>
+            </template>
           </b-table>
         </div>
       </div>
@@ -78,6 +89,8 @@
 
 <script>
 import moment from 'moment'
+import { listeAchatUser, resume } from '@/api/achat'
+import { mapState } from 'vuex'
 
 export default {
   data: () => ({
@@ -93,34 +106,45 @@ export default {
         headerClass: 'has-text-primary'
       },
       {
-        field: 'qtt',
+        field: 'montantAchat',
         label: 'Quantité ($)',
         headerClass: 'has-text-primary',
         numeric: true
       },
       {
-        field: 'prix',
+        field: 'prixUnitaire',
         label: 'Prix Unit. (FCFA)',
         headerClass: 'has-text-primary',
         numeric: true
       },
       {
-        field: 'total',
+        field: 'sommePaye',
         label: 'Total (FCFA)',
         headerClass: 'has-text-primary',
         numeric: true
       }
     ],
-    dataTab: [{
-      date: moment().format('L'),
-      description: 'Achat de dollar',
-      qtt: 50,
-      prix: 620,
-      total: 31000
-    }]
+    dataTab: [],
+    resume: {}
   }),
+  computed: {
+    ...mapState({
+      getUser: 'user'
+    })
+  },
   methods: {
-    formatDate: date => moment(date).format('L')
+    formatDate: date => moment(date).format('L'),
+    async getList () {
+      this.isLoading = true
+      const res = await listeAchatUser(this.getUser.identifiant, 1, 10)
+      this.dataTab = res.data.liste
+      this.isLoading = false
+    }
+  },
+  async mounted () {
+    await this.getList()
+    const res = await resume(this.getUser.identifiant)
+    console.log(res)
   }
 }
 </script>
