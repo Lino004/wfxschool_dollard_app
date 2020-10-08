@@ -15,7 +15,7 @@
             <div class="media-content has-text-centered">
               <p class="is-size-5 has-text-weight-bold">Vos filleules</p>
               <h4 class="is-size-4 has-text-weight-bold has-text-primary">
-                0
+                {{resume.nbrFilleule}}
               </h4>
             </div>
           </div>
@@ -35,7 +35,7 @@
             <div class="media-content has-text-centered">
               <p class="is-size-5 has-text-weight-bold">Achats ($)</p>
               <h4 class="is-size-4 has-text-weight-bold has-text-primary">
-                5000
+                {{resume.totalAchat}}
               </h4>
             </div>
           </div>
@@ -55,7 +55,7 @@
             <div class="media-content has-text-centered">
               <p class="is-size-5 has-text-weight-bold">Gain (FCFA)</p>
               <h4 class="is-size-4 has-text-weight-bold has-text-primary">
-                0
+                {{resume.totalGain}}
               </h4>
             </div>
           </div>
@@ -79,6 +79,11 @@
                   </div>
                 </template>
               </b-table-column>
+            </template>
+            <template slot="empty">
+              <div class="container has-text-centered">
+                Aucune transaction
+              </div>
             </template>
           </b-table>
         </div>
@@ -125,7 +130,11 @@ export default {
       }
     ],
     dataTab: [],
-    resume: {}
+    resume: {
+      nbrFilleule: 0,
+      totalAchat: 0,
+      totalGain: '0'
+    }
   }),
   computed: {
     ...mapState({
@@ -143,8 +152,7 @@ export default {
   },
   async mounted () {
     await this.getList()
-    const res = await resume(this.getUser.identifiant)
-    console.log(res)
+    this.resume = (await resume(this.getUser.identifiant)).data
   }
 }
 </script>

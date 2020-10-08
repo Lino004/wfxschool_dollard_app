@@ -30,6 +30,7 @@
 
 <script>
 import Header from '@/components/general/Header.vue'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -41,28 +42,45 @@ export default {
   },
   data () {
     return {
-      menuData: [
+    }
+  },
+  computed: {
+    ...mapState({
+      getUser: 'user'
+    }),
+    menuData () {
+      return [
         {
           title: 'Résumé',
           to: 'Resume',
-          icon: 'home'
+          icon: 'home',
+          show: true
         },
         {
           title: 'Liste des filleules',
           to: 'Filleules',
-          icon: 'account-multiple'
+          icon: 'account-multiple',
+          show: true
         },
         {
           title: 'Liste des achats',
           to: 'Achats',
-          icon: 'cart'
+          icon: 'cart',
+          show: !this.getUser.is_ad
+        },
+        {
+          title: 'Liste tous les achats',
+          to: 'AllAchats',
+          icon: 'cart',
+          show: this.getUser.is_ad
         },
         {
           title: 'Paramètre',
           to: 'Setting',
-          icon: 'settings'
+          icon: 'settings',
+          show: true
         }
-      ]
+      ].filter(m => m.show)
     }
   },
   methods: {

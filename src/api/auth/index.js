@@ -14,6 +14,7 @@ const URL_BASE_ARCHIVE_USER = 'tasks/user/archive'
 const URL_BASE_RESET_PASSWORD_INIT = 'auth/reset/password/init'
 const URL_BASE_RESET_PASSWORD = 'auth/reset/password'
 const URL_BASE_ADD_TO_GROUP = 'tasks/user/update/role'
+const URL_BASE_UPDATE_USER = 'tasks/user/update'
 
 export async function create (infoUser) {
   const response = await HTTP.put(URL_BASE_CREATE, infoUser)
@@ -27,6 +28,13 @@ export async function createByParraine (id, infoUser) {
 
 export async function login (infoUser) {
   const response = await HTTP.put(URL_BASE_LOGIN, infoUser)
+  return response
+}
+
+export async function update (user) {
+  // const data = user
+  // delete data.identifiant
+  const response = await HTTP.put(`${URL_BASE_UPDATE_USER}/${user.identifiant}`, user)
   return response
 }
 

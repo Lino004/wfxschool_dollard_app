@@ -18,6 +18,7 @@
     "v-animate-css": "^0.0.3",
     "vue": "^2.6.11",
     "vue-avatar": "^2.3.0",
+    "vue-clipboard2": "^0.3.1",
     "vue-router": "^3.2.0",
     "vue-typer": "^1.2.0",
     "vue2-animate": "^2.1.3",

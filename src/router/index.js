@@ -51,6 +51,11 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
+    path: '/register-parrainage/:id',
+    name: 'RegisterParrainage',
+    component: () => import('../views/Register.vue')
+  },
+  {
     path: '/vente-dollar',
     name: 'VenteDollar',
     component: () => import('../views/VenteDollar.vue'),
@@ -75,6 +80,20 @@ const routes = [
         path: 'liste-achats',
         name: 'Achats',
         component: () => import('../views/ChildBackOffice/Achats.vue')
+      },
+      {
+        path: 'liste-all-achats',
+        name: 'AllAchats',
+        component: () => import('../views/ChildBackOffice/AllAchats.vue'),
+        beforeEnter: async (to, from, next) => {
+          if (!store.state.user.is_ad) {
+            next({
+              path: '/'
+            })
+          } else {
+            next()
+          }
+        }
       },
       {
         path: 'parametre',

@@ -2,17 +2,17 @@
   <div>
     <div class="">
       <p class="title is-4 has-text-centered has-text-white is-size-5-mobile">
-        Liste des achats
+        Liste des achats des utilisateurs
       </p>
       <div class="box">
         <div class="level">
           <div class="level-left">
-            <p class="is-size-5">
+            <!-- <p class="is-size-5">
               Total des achats:
               <span class="has-text-weight-bold has-text-primary is-size-4">
                 {{total}} FCFA
               </span>
-            </p>
+            </p> -->
           </div>
         </div>
         <b-table
@@ -31,6 +31,13 @@
               <template v-slot="props">
                 <div v-if="column.field === 'date'">
                   {{ formatDate(props.row[column.field]) }}
+                </div>
+                <div v-else-if="column.field === 'valide'">
+                  <b-button
+                    :type="props.row[column.field] ? 'is-success' : 'is-danger'"
+                    @click.stop="validate(props.row.id)">
+                    {{ props.row[column.field] ? 'OUI' : 'NON' }}
+                  </b-button>
                 </div>
                 <div v-else>
                   {{ props.row[column.field] }}
@@ -51,12 +58,22 @@
 
 <script>
 import moment from 'moment'
-import { listeAchatUser } from '@/api/achat'
+import { listeAllAchatUser, valideAchat } from '@/api/achat'
 import { mapState } from 'vuex'
 
 export default {
   data: () => ({
     columns: [
+      {
+        field: 'user',
+        label: 'Nom du client',
+        headerClass: 'has-text-primary'
+      },
+      {
+        field: 'tel',
+        label: 'Téléphone',
+        headerClass: 'has-text-primary'
+      },
       {
         field: 'date',
         label: 'Date',
@@ -65,6 +82,11 @@ export default {
       {
         field: 'description',
         label: 'Description',
+        headerClass: 'has-text-primary'
+      },
+      {
+        field: 'adresse',
+        label: 'Adresse',
         headerClass: 'has-text-primary'
       },
       {
@@ -84,6 +106,11 @@ export default {
         label: 'Total (FCFA)',
         headerClass: 'has-text-primary',
         numeric: true
+      },
+      {
+        field: 'valide',
+        label: 'Validation',
+        headerClass: 'has-text-primary'
       }
     ],
     dataTab: [],
@@ -101,8 +128,13 @@ export default {
   methods: {
     async getList () {
       this.isLoading = true
-      const res = await listeAchatUser(this.getUser.identifiant, this.page, this.perPage)
-      this.dataTab = res.data.liste
+      const res = await listeAllAchatUser(this.getUser.identifiant, this.page, this.perPage)
+      this.dataTab = res.data.liste.map(e => ({
+        ...e,
+        adresse: e.adressePm ? e.adressePm : e.adresseBitcoint,
+        tel: `+${e.indicartif} ${e.phone}`,
+        valide: false
+      }))
       this.totalListe = res.data.totalListe
       this.total = res.data.totalSomme
       this.isLoading = false
@@ -111,6 +143,26 @@ export default {
     onPageChange (page) {
       this.page = page
       this.getList()
+    },
+    async validate (id) {
+      const loadingComponent = this.$buefy.loading.open({ container: null })
+      try {
+        await valideAchat(id)
+        this.getList()
+        this.$buefy.toast.open({
+          message: 'Achat validé',
+          type: 'is-success'
+        })
+        loadingComponent.close()
+      } catch (error) {
+        if (error.response) {
+          this.$buefy.toast.open({
+            message: error.response.data.error,
+            type: 'is-success'
+          })
+        }
+        loadingComponent.close()
+      }
     }
   },
   async mounted () {

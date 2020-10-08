@@ -311,7 +311,10 @@ export default {
             pays: this.champs.pays,
             is_ad: false
           }
-          await this.actionRegister(infoUser)
+          await this.actionRegister({
+            route: this.$route,
+            infoUser
+          })
           this.isRegistered = true
           loadingComponent.close()
         } catch (error) {

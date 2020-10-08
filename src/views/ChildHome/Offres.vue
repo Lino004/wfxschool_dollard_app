@@ -35,7 +35,8 @@
             v-animate-css="{
               classes: 'fadeIn',
               delay: 300
-            }"/>
+            }"
+            class="is-width-450"/>
           <h2 class="subtitle mt-4">
             <vue-typer :text="['Nos offres pour le dollars Bitcoin']"></vue-typer>
           </h2>
@@ -47,7 +48,8 @@
             v-animate-css="{
               classes: 'fadeIn',
               delay: 400
-            }"/>
+            }"
+            class="is-width-450"/>
         </div>
       </div>
     </div>

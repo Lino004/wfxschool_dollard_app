@@ -3,7 +3,10 @@ import Vuex from 'vuex'
 import {
   // get,
   login,
-  create
+  logout,
+  update,
+  create,
+  createByParraine
   // getSouscript,
 } from '@/api/auth/index'
 import createPersistedState from 'vuex-persistedstate'
@@ -20,12 +23,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async logout ({ commit, state }) {
+      await logout(state.user.identifiant)
+      commit('SET_USER', null)
+    },
     async login ({ commit }, infoUser) {
       const data = (await login(infoUser)).data
       commit('SET_USER', data)
     },
-    async register (context, infoUser) {
-      await create(infoUser)
+    async register (context, payload) {
+      if (payload.route.name === 'RegisterParrainage') {
+        await createByParraine(payload.route.params.id, payload.infoUser)
+        return
+      }
+      await create(payload.infoUser)
+    },
+    async update ({ commit }, payload) {
+      const data = (await update(payload)).data
+      commit('SET_USER', data)
     }
   },
   getters: {

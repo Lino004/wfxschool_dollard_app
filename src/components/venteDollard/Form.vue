@@ -409,7 +409,6 @@ export default {
         })
         loadingComponent.close()
       } catch (error) {
-        console.log(error.response)
         loadingComponent.close()
       }
     }
@@ -418,6 +417,8 @@ export default {
     this.listPays = getListePays
     this.indicatif = getListePays.find(el => el.id === this.getUser.pays).indicatif
     this.champs.phone = this.getUser.phone
+    this.champs.adressepm = this.getUser.adressePm ? this.getUser.adressePm : ''
+    this.champs.adressebitcoin = this.getUser.adresseBitcoin ? this.getUser.adresseBitcoin : ''
     const self = this
     setTimeout(function () {
       self.showAnime1 = true

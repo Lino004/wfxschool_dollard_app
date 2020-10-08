@@ -4,6 +4,21 @@
     :mobile-burger="false"
     :close-on-click="false"
     id="header_app">
+    <template slot="brand">
+      <b-navbar-item tag="div">
+        <div class="buttons">
+          <!-- Déconnexion -->
+          <b-tooltip label="Déconnexion"
+            position="is-bottom">
+            <b-button type="is-primary"
+              icon-right="logout"
+              @click="logout()"
+              tag="a">
+            </b-button>
+          </b-tooltip>
+        </div>
+      </b-navbar-item>
+    </template>
     <template slot="end">
       <b-navbar-item tag="div">
         <div class="buttons">
@@ -46,7 +61,8 @@
 
           <!-- Déconnexion -->
           <b-tooltip label="Déconnexion"
-            position="is-bottom">
+            position="is-bottom"
+            class="is-hidden-tablet">
             <b-button type="is-primary"
               icon-right="logout"
               @click="logout()"
@@ -60,12 +76,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapMutations({
-      actionLogout: 'SET_USER'
+    ...mapActions({
+      actionLogout: 'logout'
     }),
     logout () {
       this.actionLogout(null)

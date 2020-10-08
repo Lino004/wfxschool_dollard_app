@@ -3,7 +3,7 @@
     <div class="columns is-multiline is-mobile">
       <div class="column is-12">
         <Avatar
-          :username="`${user.nom} ${user.prenom}`"
+          :username="`${champs.nom} ${champs.prenom}`"
           :size="100"
           backgroundColor="#1e70b4"
           color="white"
@@ -15,48 +15,48 @@
       <div class="column is-12-mobile is-6-tablet">
         <b-field label="Nom">
           <b-input
-            :value="user.nom"
+            v-model="champs.nom"
             :disabled="disabled"/>
         </b-field>
       </div>
       <div class="column is-12-mobile is-6-tablet">
         <b-field label="Prenom">
           <b-input
-            :value="user.prenom"
+            v-model="champs.prenom"
             :disabled="disabled"/>
         </b-field>
       </div>
       <div class="column is-12-mobile is-6-tablet">
         <b-field label="Email">
           <b-input
-            :value="user.email"
+            v-model="champs.email"
             :disabled="disabled"/>
         </b-field>
       </div>
       <div class="column is-12-mobile is-6-tablet">
         <b-field label="Numéro">
           <b-input
-            :value="user.phone"
+            v-model="champs.phone"
             :disabled="disabled"/>
         </b-field>
       </div>
       <div class="column is-12-mobile is-6-tablet">
         <b-field label="Adresse PM">
           <b-input
-            :value="user.adressepm"
+            v-model="champs.adressepm"
             :disabled="disabled"/>
         </b-field>
       </div>
       <div class="column is-12-mobile is-6-tablet">
         <b-field label="Adresse Bitcoin">
           <b-input
-            :value="user.adressebitcoin"
+            v-model="champs.adressebitcoin"
             :disabled="disabled"/>
         </b-field>
       </div>
       <div class="column is-12-mobile is-6-tablet" v-if="disabled">
         <b-field label="Lien de parainage">
-          <b-button expanded type="is-primary" @click="$buefy.toast.open('En cours développement ...')">
+          <b-button expanded type="is-primary" @click="copieLien">
             Copier le lien de parainage
           </b-button>
         </b-field>
@@ -77,7 +77,7 @@
         <b-button
           expanded
           type="is-primary"
-          @click="$buefy.toast.open('En cours développement ...')">
+          @click="updateUser">
           Valider
         </b-button>
       </div>
@@ -87,6 +87,8 @@
 
 <script>
 import Avatar from 'vue-avatar'
+import { mapActions } from 'vuex'
+
 export default {
   components: {
     Avatar
@@ -98,6 +100,46 @@ export default {
     champs: {},
     disabled: true
   }),
+  computed: {
+  },
+  methods: {
+    ...mapActions({
+      update: 'update'
+    }),
+    async copieLien () {
+      try {
+        const getUrl = window.location
+        await this.$copyText(`${getUrl.protocol}/${getUrl.host}/register-parrainage/${this.user.identifiant_url}`)
+        this.$buefy.toast.open({
+          message: 'Lien de parrainage copié',
+          type: 'is-success'
+        })
+      } catch (error) {
+        this.$buefy.toast.open({
+          message: 'Problème lors de la copie',
+          type: 'is-danger'
+        })
+      }
+    },
+    async updateUser () {
+      try {
+        if (this.champs.password === this.user.password) {
+          delete this.champs.password
+        }
+        await this.update(this.champs)
+        this.$buefy.toast.open({
+          message: 'Modification effectuée',
+          type: 'is-success'
+        })
+        this.disabled = true
+      } catch (error) {
+        this.$buefy.toast.open({
+          message: 'Erreur lors de la modification',
+          type: 'is-danger'
+        })
+      }
+    }
+  },
   mounted () {
     this.champs = this.user
   }
