@@ -4,7 +4,7 @@
       <div class="columns flex-1 is-marginless">
         <div
           class="
-            column flex-1 is-full-height has-background-white
+            column flex-1 is-min-full-height has-background-white
             px-6 form_vente is-5 is-4-desktop box_shadow_1"
           v-show="!showOneColumn || show">
           <Infos :tranche-offres="trancheOffres"

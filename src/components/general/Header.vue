@@ -4,10 +4,9 @@
     :mobile-burger="false"
     :close-on-click="false"
     id="header_app">
-    <template slot="brand">
+    <!-- <template slot="brand">
       <b-navbar-item tag="div">
         <div class="buttons">
-          <!-- Déconnexion -->
           <b-tooltip label="Déconnexion"
             position="is-bottom">
             <b-button type="is-primary"
@@ -18,7 +17,7 @@
           </b-tooltip>
         </div>
       </b-navbar-item>
-    </template>
+    </template> -->
     <template slot="end">
       <b-navbar-item tag="div">
         <div class="buttons">
@@ -62,7 +61,7 @@
           <!-- Déconnexion -->
           <b-tooltip label="Déconnexion"
             position="is-bottom"
-            class="is-hidden-tablet">
+            class="">
             <b-button type="is-primary"
               icon-right="logout"
               @click="logout()"

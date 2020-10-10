@@ -128,3 +128,13 @@ a.button.is-primary{
 .tabs.is-boxed a:hover.primary {
   color: $primary !important;
 }
+
+.is-position-fixed {
+  position: fixed;
+}
+
+#menu-backoffice {
+  .sidebar-content {
+    width: 450px;
+  }
+}

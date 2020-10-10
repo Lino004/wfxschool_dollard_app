@@ -6,7 +6,7 @@ export async function achatDollar (info) {
 }
 
 export async function valideAchat (id) {
-  const response = await HTTP.put('tasks/change/achat/valide' + id)
+  const response = await HTTP.put('tasks/change/achat/valide/' + id)
   return response
 }
 

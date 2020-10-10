@@ -4,10 +4,29 @@
       <div class="columns flex-1 is-marginless">
         <div
           class="
-            column flex-1 is-full-height has-background-white
-            px-6 form_vente is-5 is-4-desktop box_shadow_1"
+            column flex-1 is-min-full-height has-background-white
+            px-6 form_vente is-5 is-4-desktop is-3-widescreen box_shadow_1
+            is-hidden-desktop-only is-hidden-tablet-only"
           v-show="!showOneColumn || show">
           <Menu @isclick="show = false"/>
+        </div>
+        <div class="is-hidden-mobile is-hidden-widescreen">
+          <b-sidebar
+            fullheight
+            overlay
+            v-model="open"
+            id="menu-backoffice"
+          >
+            <div class="px-2 py-2">
+              <Menu @isclick="show = false"/>
+            </div>
+          </b-sidebar>
+          <b-button
+            @click="open = true"
+            icon-left="menu"
+            class="mt-5 ml-5 is-position-fixed"
+            style="z-index: 30">
+          </b-button>
         </div>
         <div class="column flex-1 px-6 form_vente" v-show="!showOneColumn || !show">
           <div class="container">
@@ -72,7 +91,8 @@ export default {
       window: {
         width: 0,
         height: 0
-      }
+      },
+      open: false
     }
   },
   watch: {

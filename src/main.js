@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Buefy from 'buefy'
 import VAnimateCss from 'v-animate-css'
 import VueClipboard from 'vue-clipboard2'
+import moment from 'moment'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
@@ -16,6 +17,8 @@ Vue.use(VAnimateCss)
 Vue.use(VueClipboard)
 
 Vue.config.productionTip = false
+
+moment.locale('fr')
 
 new Vue({
   router,
