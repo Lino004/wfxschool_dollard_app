@@ -96,6 +96,20 @@ const routes = [
         }
       },
       {
+        path: 'back-offres',
+        name: 'BackOffres',
+        component: () => import('../views/ChildBackOffice/Offres.vue'),
+        beforeEnter: async (to, from, next) => {
+          if (!store.state.user.is_ad) {
+            next({
+              path: '/'
+            })
+          } else {
+            next()
+          }
+        }
+      },
+      {
         path: 'parametre',
         name: 'Setting',
         component: () => import('../views/ChildBackOffice/Setting.vue')

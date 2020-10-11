@@ -57,6 +57,9 @@
 </template>
 
 <script>
+import {
+  listeAllOffre
+} from '@/api/achat'
 import { VueTyper } from 'vue-typer'
 
 export default {
@@ -65,14 +68,6 @@ export default {
   },
   data () {
     return {
-      trancheOffres: [
-        { trancheInferieur: 50, trancheSuperieur: 0, prix: 620 },
-        { trancheInferieur: 1000, trancheSuperieur: 0, prix: 610 }
-      ],
-      trancheOffresBitcoin: [
-        { trancheInferieur: 50, trancheSuperieur: 0, prix: 610 },
-        { trancheInferieur: 1000, trancheSuperieur: 0, prix: 600 }
-      ],
       columns: [
         {
           field: 'tranche',
@@ -85,7 +80,8 @@ export default {
           headerClass: 'has-text-primary',
           numeric: true
         }
-      ]
+      ],
+      tranches: []
     }
   },
   computed: {
@@ -116,7 +112,33 @@ export default {
           prix: `${el.prix}`
         }
       })
+    },
+    trancheOffres () {
+      return this.tranches.filter(el => el.type === 'PM').sort((a, b) => a.trancheInferieur - b.trancheInferieur)
+    },
+    trancheOffresBitcoin () {
+      return this.tranches.filter(el => el.type === 'BITCOIN').sort((a, b) => a.trancheInferieur - b.trancheInferieur)
     }
+  },
+  methods: {
+    async getList () {
+      this.isLoading = true
+      try {
+        const res = await listeAllOffre()
+        this.tranches = res.data.map(el => ({
+          ...el,
+          trancheInferieur: parseInt(el.trancheInferieur),
+          trancheSuperieur: parseInt(el.trancheSuperieur),
+          prix: parseInt(el.prix)
+        }))
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+      }
+    }
+  },
+  mounted () {
+    this.getList()
   }
 }
 </script>

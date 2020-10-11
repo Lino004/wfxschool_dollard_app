@@ -75,6 +75,12 @@ export default {
           show: this.getUser.is_ad
         },
         {
+          title: 'Gestion des offres',
+          to: 'BackOffres',
+          icon: 'tag',
+          show: this.getUser.is_ad
+        },
+        {
           title: 'Paramètre',
           to: 'Setting',
           icon: 'settings',
