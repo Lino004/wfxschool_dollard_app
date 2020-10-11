@@ -264,6 +264,7 @@ export default {
           type: 'is-success'
         })
         loadingComponent.close()
+        this.showDetailAchat = false
       } catch (error) {
         if (error.response) {
           this.$buefy.toast.open({
