@@ -36,6 +36,7 @@
               classes: 'fadeIn',
               delay: 300
             }"
+            :loading="isLoading"
             class="is-width-450"/>
           <h2 class="subtitle mt-4">
             <vue-typer :text="['Nos offres pour le dollars Bitcoin']"></vue-typer>
@@ -49,6 +50,7 @@
               classes: 'fadeIn',
               delay: 400
             }"
+            :loading="isLoading"
             class="is-width-450"/>
         </div>
       </div>
@@ -81,7 +83,8 @@ export default {
           numeric: true
         }
       ],
-      tranches: []
+      tranches: [],
+      isLoading: false
     }
   },
   computed: {

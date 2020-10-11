@@ -13,7 +13,8 @@
         </div>
         <div class="column flex-1 px-6 form_vente" v-show="!showOneColumn || !show">
           <Form :tranche-offres="trancheOffres"
-                :tranche-offres-bitcoin="trancheOffresBitcoin"/>
+                :tranche-offres-bitcoin="trancheOffresBitcoin"
+                :isLoading="isLoading"/>
         </div>
       </div>
     </section>

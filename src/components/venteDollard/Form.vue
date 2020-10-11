@@ -137,7 +137,8 @@
                 type="is-primary"
                 class="is-static has-background-white has-text-weight-bold"
                 :class="montantPayer.class"
-                expanded>
+                expanded
+                :loading="isLoading">
                 {{montantPayer.value}} FCFA
               </b-button>
             </b-field>
@@ -193,7 +194,8 @@
           class="my-5"
           v-if="show"
           @click="next"
-          icon-right="arrow-right-box">
+          icon-right="arrow-right-box"
+          :loading="isLoading">
           <span class="has-text-weight-bold">
             Suivant
           </span>
@@ -240,7 +242,8 @@ export default {
   },
   props: {
     trancheOffres: Array,
-    trancheOffresBitcoin: Array
+    trancheOffresBitcoin: Array,
+    isLoading: Boolean
   },
   data: () => ({
     show: true,

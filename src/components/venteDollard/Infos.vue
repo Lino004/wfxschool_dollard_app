@@ -36,7 +36,8 @@
       v-animate-css="{
         classes: 'slideInLeft',
         delay: 300
-      }"></b-table>
+      }"
+      :loading="isLoading"></b-table>
 
     <p class="subtitle has-text-centered has-text-primary is-size-5-mobile mt-2"
       v-animate-css="{
@@ -54,7 +55,8 @@
       v-animate-css="{
         classes: 'slideInLeft',
         delay: 400
-      }"></b-table>
+      }"
+      :loading="isLoading"></b-table>
 
     <br>
   </div>
@@ -66,7 +68,8 @@ import Header from '@/components/general/Header.vue'
 export default {
   props: {
     trancheOffres: Array,
-    trancheOffresBitcoin: Array
+    trancheOffresBitcoin: Array,
+    isLoading: Boolean
   },
   components: {
     Header
